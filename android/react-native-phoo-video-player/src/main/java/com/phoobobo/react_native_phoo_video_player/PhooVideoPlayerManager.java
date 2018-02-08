@@ -17,10 +17,9 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 
-public class PhooVideoPlayerManager extends SimpleViewManager<PhooVideoPlayerView> implements LifecycleEventListener{
+public class PhooVideoPlayerManager extends SimpleViewManager<PhooVideoPlayerView> {
 
     private AppCompatActivity mActivity;
-    private BroadcastReceiver mReceiver;
     private static final String TAG = "PhooVideoPlayerManager";
 
     @Override
@@ -29,31 +28,20 @@ public class PhooVideoPlayerManager extends SimpleViewManager<PhooVideoPlayerVie
     }
 
     @Override
-    protected PhooVideoPlayerView createViewInstance(final ThemedReactContext reactContext) {
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Configuration newConfig = intent.getParcelableExtra("newConfig");
-                Log.d(TAG, "newConfig: " + newConfig.orientation);
-                String orientationValue = newConfig.orientation == 1 ? "PORTRAIT" : "LANDSCAPE";
-            }
-        };
-        reactContext.addLifecycleEventListener(this);
+    protected PhooVideoPlayerView createViewInstance(ThemedReactContext reactContext) {
         mActivity = (AppCompatActivity) reactContext.getCurrentActivity();
-        final PhooVideoPlayerView player = new PhooVideoPlayerView(reactContext);
-        player.setRotateViewAuto(false);
-        player.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.startWindowFullscreen(mActivity, true, true);
-            }
-        });
+        PhooVideoPlayerView player = new PhooVideoPlayerView(reactContext);
         return player;
     }
 
     @ReactProp(name="src")
     public void setSrc(PhooVideoPlayerView video, String src) {
         video.setUp(src, false, "hahaha");
+    }
+
+    @ReactProp(name="coverImgUrl")
+    public void setCoverImage(PhooVideoPlayerView video, String coverImgUrl) {
+        video.loadCoverImage(coverImgUrl, R.drawable.video_error_normal);
     }
 
     @ReactProp(name="fullscreen")
@@ -64,27 +52,7 @@ public class PhooVideoPlayerManager extends SimpleViewManager<PhooVideoPlayerVie
     }
 
     @Override
-    public void onHostResume() {
-        mActivity.registerReceiver(mReceiver, new IntentFilter("onConfigurationChanged"));
-    }
-
-    @Override
-    public void onHostPause() {
-        if (mActivity == null) return;
-        try {
-            mActivity.unregisterReceiver(mReceiver);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onHostDestroy() {
-        if (mActivity == null) return;
-        try {
-            mActivity.unregisterReceiver(mReceiver);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+    public void updateExtraData(PhooVideoPlayerView root, Object extraData) {
+        super.updateExtraData(root, extraData);
     }
 }

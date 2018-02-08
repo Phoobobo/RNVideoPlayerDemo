@@ -10,6 +10,7 @@ const iFace = {
     propTypes: {
         ...View.propTypes,
         src: PropTypes.string,
+        coverImgUrl: PropTypes.string,
         fullscreen: PropTypes.bool,
     },
 };
