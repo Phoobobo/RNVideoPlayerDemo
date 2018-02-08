@@ -43,7 +43,7 @@ public class PhooVideoPlayerView extends VideoWithCover {
                 if (orientation != 0 && !isIfCurrentIsFullscreen()) {
                     startWindowFullscreen(currentActivity, true, true);
                 } else if (orientation == 0 && isIfCurrentIsFullscreen()) {
-                    backFromWindowFull(currentActivity);
+                    backFromFull(currentActivity);
                 }
             }
         }.enable();
