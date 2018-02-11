@@ -12,6 +12,8 @@ import {
     View,
     Dimensions,
 } from 'react-native';
+import { observable, toJS } from 'mobx';
+import { observer } from 'mobx-react/native';
 import PhooVideoPlayer from './react-native-phoo-video-player';
 
 const instructions = Platform.select({
@@ -25,7 +27,10 @@ const src = 'http://video.pearvideo.com/mp4/short/20180205/cont-1273507-11540028
 const src2 = 'http://video.pearvideo.com/mp4/third/20180205/11308777_134140-hd.mp4';
 const cover = 'http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg';
 
+@observer
 export default class App extends Component<{}> {
+
+    @observable src = src;
     static navigatorStyle = {
         navBarBackgroundColor: '#f7f7f7',
         navBarHidden: true,
@@ -35,7 +40,7 @@ export default class App extends Component<{}> {
             <View style={styles.container}>
                 <PhooVideoPlayer
                     style={styles.video}
-                    src={src}
+                    src={this.src}
                     coverImgUrl={cover}
                     // renderToHardwareTextureAndroid={true}
                 />

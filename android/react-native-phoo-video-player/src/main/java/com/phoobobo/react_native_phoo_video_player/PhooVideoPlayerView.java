@@ -67,4 +67,25 @@ public class PhooVideoPlayerView extends VideoWithCover {
     protected void addTextureView() {
         super.addTextureView();
     }
+
+    @Override
+    public void startAfterPrepared() {
+        super.startAfterPrepared();
+    }
+
+    @Override
+    protected void initInflate(Context context) {
+        super.initInflate(context);
+    }
+
+    @Override
+    protected void init(Context context) {
+        super.init(context);
+//        addTextureView();
+    }
+
+    @Override
+    public boolean setUp(String url, boolean cacheWithPlay, String title) {
+        return super.setUp(url, cacheWithPlay, title);
+    }
 }
