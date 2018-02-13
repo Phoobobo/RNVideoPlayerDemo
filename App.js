@@ -31,15 +31,23 @@ const cover = 'http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f6
 export default class App extends Component<{}> {
 
     @observable src = src;
+    @observable height = 270;
     static navigatorStyle = {
         navBarBackgroundColor: '#f7f7f7',
         navBarHidden: true,
     };
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.height = 271;
+        }, 10000);
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <PhooVideoPlayer
-                    style={styles.video}
+                    style={[styles.video, { height: this.height }]}
                     src={this.src}
                     coverImgUrl={cover}
                     // renderToHardwareTextureAndroid={true}

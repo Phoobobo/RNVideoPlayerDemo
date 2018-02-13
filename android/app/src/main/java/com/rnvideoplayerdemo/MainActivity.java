@@ -13,14 +13,10 @@ public class MainActivity extends SplashActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PhooVideoPlayerView playerView = findViewById(R.id.welcome_video);
-        String url = "http://video.pearvideo.com/mp4/short/20180205/cont-1273507-11540028-hd.mp4";
-        playerView.setUp(url, false, "");
-        playerView.startPlayLogic();
     }
 
     @Override
     public View createSplashLayout() {
-        return View.inflate(this, R.layout.splash_layout, null);
+        return super.createSplashLayout();
     }
 }

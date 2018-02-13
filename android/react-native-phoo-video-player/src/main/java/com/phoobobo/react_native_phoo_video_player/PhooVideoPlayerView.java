@@ -2,6 +2,7 @@ package com.phoobobo.react_native_phoo_video_player;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +13,14 @@ import android.view.View;
 
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 
 public class PhooVideoPlayerView extends VideoWithCover {
 
     private static final String TAG = "PhooVideoPlayerView";
+    private ThemedReactContext rnCtx = null;
     public PhooVideoPlayerView(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
@@ -25,6 +28,7 @@ public class PhooVideoPlayerView extends VideoWithCover {
     public PhooVideoPlayerView(final Context context) {
         super(context);
         ThemedReactContext themedReactContext = (ThemedReactContext) context;
+        rnCtx = themedReactContext;
         final AppCompatActivity currentActivity = (AppCompatActivity) themedReactContext.getCurrentActivity();
 
         setRotateViewAuto(false);
@@ -61,11 +65,15 @@ public class PhooVideoPlayerView extends VideoWithCover {
     @Override
     public void startPlayLogic() {
         super.startPlayLogic();
+//        rnCtx.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "topChange", null);
     }
 
     @Override
     protected void addTextureView() {
         super.addTextureView();
+//        View view = new View(getActivityContext());
+//        view.setBackgroundColor(Color.WHITE);
+//        mTextureViewContainer.addView(view);
     }
 
     @Override
