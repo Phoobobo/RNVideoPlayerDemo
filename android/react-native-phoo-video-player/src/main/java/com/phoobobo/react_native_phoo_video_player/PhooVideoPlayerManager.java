@@ -11,10 +11,16 @@ import android.util.Log;
 import android.view.View;
 
 import com.facebook.react.bridge.LifecycleEventListener;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.phoobobo.react_native_phoo_video_player.PhooVideoPlayerView.Events;
+
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 
 public class PhooVideoPlayerManager extends SimpleViewManager<PhooVideoPlayerView> {
@@ -32,6 +38,16 @@ public class PhooVideoPlayerManager extends SimpleViewManager<PhooVideoPlayerVie
         mActivity = (AppCompatActivity) reactContext.getCurrentActivity();
         PhooVideoPlayerView player = new PhooVideoPlayerView(reactContext);
         return player;
+    }
+
+    @Override
+    @Nullable
+    public Map getExportedCustomDirectEventTypeConstants() {
+        MapBuilder.Builder builder = MapBuilder.builder();
+        for (Events event : Events.values()) {
+            builder.put(event.toString(), MapBuilder.of("registrationName", event.toString()));
+        }
+        return builder.build();
     }
 
     @ReactProp(name="src")

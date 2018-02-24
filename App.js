@@ -12,7 +12,7 @@ import {
     View,
     Dimensions,
 } from 'react-native';
-import { observable, toJS } from 'mobx';
+import { observable, toJS, action, runInAction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import PhooVideoPlayer from './react-native-phoo-video-player';
 
@@ -39,9 +39,15 @@ export default class App extends Component<{}> {
 
     componentDidMount() {
         setTimeout(() => {
-            this.height = 271;
+            // this.height = 271;
         }, 10000);
     }
+
+    @action
+    onPlayPrepared = () => {
+        console.warn('prepared')
+        this.height = 271;
+    };
 
     render() {
         return (
@@ -50,6 +56,7 @@ export default class App extends Component<{}> {
                     style={[styles.video, { height: this.height }]}
                     src={this.src}
                     coverImgUrl={cover}
+                    onPlayPrepared={this.onPlayPrepared}
                     // renderToHardwareTextureAndroid={true}
                 />
                 <Text style={styles.welcome}>

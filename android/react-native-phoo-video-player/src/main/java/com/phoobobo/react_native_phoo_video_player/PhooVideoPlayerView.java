@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.View;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
@@ -18,6 +19,21 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 
 public class PhooVideoPlayerView extends VideoWithCover {
+
+    public enum Events {
+        EVENT_PLAY_PREPARED("onPlayPrepared");
+
+        private final String mName;
+
+        Events(final String name) {
+            mName = name;
+        }
+
+        @Override
+        public String toString() {
+            return mName;
+        }
+    }
 
     private static final String TAG = "PhooVideoPlayerView";
     private ThemedReactContext rnCtx = null;
@@ -65,7 +81,12 @@ public class PhooVideoPlayerView extends VideoWithCover {
     @Override
     public void startPlayLogic() {
         super.startPlayLogic();
-//        rnCtx.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "topChange", null);
+    }
+
+    @Override
+    public void onPrepared() {
+        super.onPrepared();
+        rnCtx.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), Events.EVENT_PLAY_PREPARED.toString(), Arguments.createMap());
     }
 
     @Override
